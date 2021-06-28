@@ -1,6 +1,5 @@
 package greedy;
 
-import java.sql.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -9,22 +8,25 @@ import java.util.Comparator;
  * 一群孩子站成一排，每一个孩子有自己的评分。现在需要给这些孩子发糖果，规则是如果一
  * 个孩子的评分比自己身旁的一个孩子要高，那么这个孩子就必须得到比身旁孩子更多的糖果；所
  * 有孩子至少要有一个糖果。求解最少需要多少个糖果。
+ * 先从小的开始确定，（两边边界之后），比较左右的大小关系，比较左右与中间的大小关系
  * @Date 2021/6/25
  */
 
 public class Candy_135 {
-    public static int candySum = 0;
     public static int candy[] = null;
     public static int ratBak[] = null;
     public static int ratingSort[][] = null;
 
     public static void main(String[] argus) {
-        int[] ratings = {1,2,2};
+        int[] ratings = {};
         System.out.println(candy(ratings));
 
     }
 
     public static int candy(int[] ratings) {
+        if(ratings.length == 0 || ratings.length == 1) {
+            return 1;
+        }
         ratBak = ratings;
         candy = new int[ratBak.length];
         ratingSort = new int[ratings.length][2];
@@ -61,12 +63,25 @@ public class Candy_135 {
             return;
         }
 
-        int minIdx, maxIdx, minRate, maxRate;
+        int minIdx = 0;
+        int maxIdx = 0;
+        int minRate = 0;
+        int maxRate = 0;
 
         if(cur == 0) {
-
+            if(ratBak[cur] <= ratBak[cur+1]) {
+                candy[cur] = 1;
+            } else {
+                candy[cur] = candy[cur+1] + 1;
+            }
+            return;
         } else if(cur == ratBak.length - 1) {
-
+            if(ratBak[cur] <= ratBak[cur-1]) {
+                candy[cur] = 1;
+            } else {
+                candy[cur] = candy[cur-1] + 1;
+            }
+            return;
         } else {
             if(ratBak[cur-1] < ratBak[cur+1]) {
                 minIdx = cur - 1;
@@ -78,33 +93,21 @@ public class Candy_135 {
                 maxIdx = cur - 1;
                 minRate = ratBak[cur + 1];
                 maxRate = ratBak[cur - 1];
-            } else {
-
+            } else if((ratBak[cur-1] == ratBak[cur+1]) && (ratBak[cur] > ratBak[cur - 1]) ){
+                candy[cur] = Math.max(candy[cur-1], candy[cur+1]) + 1;
+                return;
+            } else if((ratBak[cur-1] == ratBak[cur+1]) && (ratBak[cur] <= ratBak[cur - 1]) ) {
+                candy[cur] = 1;
+                return;
             }
         }
-
-//        int preRating = (cur == 0) ? 0 : ratBak[cur - 1];
-//        int nextRating = (cur == ratBak.length - 1) ? 0 : ratBak[cur + 1];
-//        int minRating = Math.min(preRating, nextRating);
-//        int maxRating = Math.max(preRating, nextRating);
-//
-//        int preCandy = (cur == 0) ? 0 : candy[cur - 1];
-//        int nextCandy =  (cur == ratBak.length - 1) ? 0 : candy[cur + 1];
-//        int minCandy = Math.min(preCandy, nextCandy);
-//        int maxCandy = Math.max(preCandy, nextCandy);
 
         if (ratBak[cur] < minRate) {
             //比两边都小
             candy[cur] = 1;
-            if(cur > 0) {
-                assignCandy(cur - 1);
-            }
-            if(cur < ratBak.length ) {
-                assignCandy(cur + 1);
-            }
         } else if (ratBak[cur] > maxRate) {
             //比两边都大
-            candy[cur] = candy[maxIdx] + 1;
+            candy[cur] = Math.max(candy[maxIdx], candy[minIdx]) + 1;
         } else if (ratBak[cur] > minRate && ratBak[cur] <= maxRate) {
             //比一边大，或者与大的一边相同
             candy[cur] = candy[minIdx] + 1;
