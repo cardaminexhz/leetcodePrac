@@ -6,7 +6,7 @@ import java.util.Comparator;
 /**
  * @Description 用最少数量的箭引爆气球
  * 排序时注意边界条件，int的最大值和最小值
- * @Tag 排序，贪心
+ * @Tag 重叠区间，排序，贪心
  * @Date 2021/7/2
  */
 

@@ -6,6 +6,7 @@ import java.util.Comparator;
 /**
  * @Description
  * 给定多个区间，计算让这些区间互不重叠所需要移除区间的最少个数。起止相连不算重叠。
+ * @Tag 重叠区间，排序，贪心
  * @Date 2021/6/28
  */
 
