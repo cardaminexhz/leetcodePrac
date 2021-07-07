@@ -19,8 +19,8 @@ class ListNode {
 
 public class LinkedListCycle2_142 {
     public static void main(String[] argus) {
-        int[] elems = {1};
-        int pos = -1;
+        int[] elems = {3,2,0,4};
+        int pos = 1;
         ListNode head = initListWithCycle(elems, pos);
 
         ListNode cycleStart = detectCycle(head);
