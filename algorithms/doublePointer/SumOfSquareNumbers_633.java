@@ -2,7 +2,7 @@ package doublePointer;
 
 /**
  * @Description
- * 给定一个非负整数 c ，你要判断是否存在两个整数 a 和 b，使得 a2 + b2 = c 。
+ * 给定一个非负整数 c ，你要判断是否存在两个整数 a 和 b，使得 a^2 + b^2 = c 。
  * 167-TwoSum2的变形
  * @Tag 双指针
  * @Date 2021/7/7
