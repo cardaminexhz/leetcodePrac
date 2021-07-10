@@ -3,3 +3,18 @@
 https://time.geekbang.org/column/intro/100017301
 
 https://blog.csdn.net/qq_35641192/article/details/88914998
+
+
+https://leetcode-cn.com/problems/search-insert-position/solution/te-bie-hao-yong-de-er-fen-cha-fa-fa-mo-ban-python-/
+
+二分查找的核心永远是丢掉不可能有答案的那一半，middle+1的时候是middle不可能为答案的时候，middle不+1的时候是不能排除middle是否为答案的时候
+
+当 while (left < right) 时，对应的更新式是 left = middle + 1 ， right = middle
+
+当 while (left <= right) 时，对应的更新式是 left = middle + 1，right = middle - 1
+
+本题由于【当区间长度为1时，即可停止二分查找】，所以是 while (left < right) ，所以是 left = middle + 1，right = middle
+
+
+使用mid = left + (right - left) / 2; 而不是 mid = (left + right) / 2;
+可避免left right之和过大导致溢出。
