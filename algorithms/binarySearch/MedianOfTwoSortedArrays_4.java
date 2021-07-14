@@ -8,12 +8,20 @@ package binarySearch;
 
 public class MedianOfTwoSortedArrays_4 {
     public static void main(String[] argus) {
-        int[] nums1 = {4,0,0,0,0,0};
-        int m = 1;
-        int[] nums2 = {1,2,3,5,6};
-        int n = 5;
+        int[] nums1 = {1,3};
+        int m = 2;
+        int[] nums2 = {2};
+        int n = 1;
 
         merge(nums1, m, nums2, n);
+        int len = nums1.length;
+        if(len % 2 == 1) {
+            System.out.println(nums1[len/2]);
+        } else {
+            int idx = len / 2;
+            int res = (nums1[idx] + nums1[idx - 1])/2;
+            System.out.println(res);
+        }
     }
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
