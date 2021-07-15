@@ -13,9 +13,7 @@ import java.util.Arrays;
 
 public class Basic_InsertSort {
     public static void main(String[] argus) {
-        // 测试例子
-        int[] arr = {6, 2, 4, 1, 5, 9};           // 显示引入标志位后的优化效果
-//        int[] arr = {9, 8, 7, 6, 5, 4, 3, 2, 1};  // 显示冒泡排序：每次将最大值移到最后
+        int[] arr = {6, 2, 4, 1, 5, 9};
         sort(arr);
         System.out.println(Arrays.toString(arr));
     }
