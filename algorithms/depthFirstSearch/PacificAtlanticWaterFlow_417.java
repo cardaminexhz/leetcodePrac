@@ -1,60 +1,71 @@
 package depthFirstSearch;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Description TODO
- * @Tag
+ * @Description
+ * 给定一个二维的非负整数矩阵，每个位置的值表示海拔高度。假设左边和上边是太平洋，右
+ * 边和下边是大西洋，求从哪些位置向下流水，可以流到太平洋和大西洋。水只能从海拔高的位置
+ * 流到海拔低或相同的位置。
+ * tips 四条边的遍历
+ * @Tag 深度优先搜索
  * @Date 2021/7/26
  */
 
 public class PacificAtlanticWaterFlow_417 {
     public static void main(String[] argus) {
-        int[][] heights = {{1, 2, 2, 3, 5}, {3, 2, 3, 4, 4}, {2, 4, 5, 3, 1}, {6, 7, 1, 4, 5}, {5, 1, 1, 2, 4}};
-        pacificAtlantic(heights);
-//        System.out.println(pacificAtlantic(heights));
+//        int[][] heights = {{1, 2, 2, 3, 5}, {3, 2, 3, 4, 4}, {2, 4, 5, 3, 1}, {6, 7, 1, 4, 5}, {5, 1, 1, 2, 4}};
+        int[][] heights = {{1,1},{1,1},{1,1}};
+        System.out.println(pacificAtlantic(heights));
     }
 
-    public static void pacificAtlantic(int[][] heights) {
-        int[][] pacific = new int[heights.length][heights.length];
-        int[][] atlantic = new int[heights.length][heights.length];
+    public static List<List<Integer>> pacificAtlantic(int[][] heights) {
+        List<List<Integer>> res = new ArrayList<>();
+        int m = heights.length;
+        int n = heights[0].length;
+        boolean[][] pacific = new boolean[m][n];
+        boolean[][] atlantic = new boolean[m][n];
 
-        int i1 = 0;
-        for (int j1 = 0; j1 < heights.length; j1++) {
-            pacific[i1][j1] = 1;
-        }
-        int j2 = 0;
-        for (int i2 = 0; i2 < heights.length; i2++) {
-            pacific[i2][j2] = 1;
-        }
-
-        for (int j1 = 0; j1 < heights.length; j1++) {
-            dfsPacific(heights, i1, j1, pacific);
+        for (int i = 0; i <= m-1; i++) {
+            dfs(heights, i, 0, pacific);
+            dfs(heights, i, n-1, atlantic);
         }
 
-        for (int i2 = 0; i2 < heights.length; i2++) {
-            dfsPacific(heights, i2, j2, pacific);
+        for (int i = 0; i <= n-1 ; i++) {
+            dfs(heights, 0, i, pacific);
+            dfs(heights, m-1, i, atlantic);
         }
-        int i3= 0;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if(pacific[i][j] && atlantic[i][j]) {
+                    res.add(Arrays.asList(new Integer[]{i, j}));
+                }
+            }
+        }
+        return res;
 
     }
 
-    public static void dfsPacific(int[][] h, int x, int y, int[][] pacific) {
-        if (x == h.length-1 || y == h.length-1) {
+    public static int[] xx = {0,0,-1,1};
+    public static int[] yy = {-1,1,0,0};
+
+    public static void dfs(int[][] h, int cur_x, int cur_y, boolean[][] canReach) {
+        if (canReach[cur_x][cur_y]) {
             return;
         }
-        if (h[x][y] <= h[x][y + 1]) {
-            pacific[x][y] = 1;
-            dfsPacific(h, x, y + 1, pacific);
-        }
-        if (h[x][y] <= h[x + 1][y]) {
-            pacific[x][y] = 1;
-            dfsPacific(h, x + 1, y, pacific);
-        }
-    }
 
-    public static void dfsAtlantic(int[][] heights, int cur_x, int cur_y, int[][] atlantic) {
-
+        canReach[cur_x][cur_y] = true;
+        for (int i = 0; i < 4; i++) {
+            int x = cur_x + xx[i];
+            int y = cur_y + yy[i];
+            if (x >= 0 && y >= 0 && x <= h.length - 1 && y <= h[0].length - 1
+                    && h[cur_x][cur_y] <= h[x][y]) {
+                dfs(h, x, y, canReach);
+            }
+        }
     }
 
 }
