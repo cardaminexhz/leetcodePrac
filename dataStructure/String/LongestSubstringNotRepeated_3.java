@@ -21,7 +21,6 @@ import java.util.*;
 public class LongestSubstringNotRepeated_3 {
     public static void main(String[] argus) {
         String s = "abcabcbb";
-        System.out.println(s.length());
         System.out.println(lengthOfLongestSubstring(s));
     }
 
